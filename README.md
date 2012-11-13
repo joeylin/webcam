@@ -1,4 +1,4 @@
-webcam
+tooltips
 ======
 
-a html5 based camera app 
+a powerfull tooltips 
