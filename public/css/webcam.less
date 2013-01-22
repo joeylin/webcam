@@ -1,0 +1,361 @@
+/*===========Popup.css==================*/
+body {
+    background: url("http://localhost/webcam/image/bg.png") repeat-x scroll 0 0 #D9DEE1;
+}
+ul {
+    list-style: none;
+}
+.error,.inline {
+    display: none;
+}
+section {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    display: none;
+    background-color: #F5F4F1;
+
+    -webkit-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+    -webkit-border-radius: 10px;
+    border-radius: 10px; 
+
+    .terms {
+        color: #BEB1CC;
+        font-size: 13px;
+    }
+
+    .mask-one {
+        background: url("http://localhost/webcam/image/mask-one.png") no-repeat scroll 0 0 transparent;
+    }
+    .mask-two {
+        background: url("http://localhost/webcam/image/mask-two.png") no-repeat scroll 0 0 transparent;
+    }
+    .mask-three {
+        background: url("http://localhost/webcam/image/mask-three.png") no-repeat scroll 0 0 transparent;
+    }
+}
+.logo {
+    position: fixed;
+    top: 0;
+    left: 20%;
+
+    width: 145px;
+    height: 40px;
+
+    font-size: 29px;
+    color: #fff;
+    background-color: #ED3035;
+    text-align: center; 
+
+    -webkit-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+    -webkit-border-radius: 0 0 10px 10px;
+    border-radius: 0 0 10px 10px;
+}
+.login {
+    text-indent: -9999px;
+}
+.welcome {
+    display: block;
+    width: 500px;
+    height: 400px;
+
+    margin-top: -200px;
+    margin-left: -250px;
+
+    background-color: #F5F4F1;
+
+    .control {
+        text-align: center;
+        border-bottom: 1px solid #E5E3DC;
+        background-color: #fff;
+        -webkit-border-radius: 10px 10px 0 0;
+        border-radius: 10px 10px 0 0; 
+        h2 {
+            display: inline-block;
+            margin: 25px 50px;
+
+            font-size: 30px;
+            font-weight: 400;
+            line-height: 100%;
+        }
+        span {
+            display: inline-block;
+            width: 95px;
+            height: 95px;
+            margin: 30px 0 65px 0;
+
+            cursor: pointer;
+            text-indent: -9999px;
+            background: url("http://localhost/webcam/image/start.png") no-repeat scroll 0 0 transparent;
+        }
+    }
+    .feature {
+        text-align: center;
+        border-top: 1px solid #fff;
+        ul {
+            display: inline-block;
+            padding-top: 13px;
+            text-align: left;
+
+            li {
+                font-size: 15px;
+                padding-left: 20px;
+                background: url("http://localhost/webcam/image/check.png") no-repeat scroll 0 6px transparent;
+            }
+        }
+    }    
+}
+.basicInfo {
+    display: none;
+    width: 510px;
+    height: 460px;
+
+    padding: 0 25px;
+    margin-top: -232px;
+    margin-left: -255px;
+
+    h2 {
+        display: inline-block;
+        margin: 25px 50px;
+
+        font-size: 30px;
+        font-weight: 400;
+        line-height: 100%;
+    }
+
+    .info {
+        width: 100%;
+        padding: 5px 0 10px 0;
+
+        border-bottom: 1px solid #E8E8E8;
+        overflow: hidden;
+
+        .input {
+            height: 23px;
+            line-height: 23px;
+            padding: 0 0 40px 0;
+
+            font-weight: bold;
+            background-color: #F3F3F3;
+            
+            label {
+                display: inline-block;
+                min-width: 59px;
+                
+                font-weight: bold;
+                cursor: pointer;               
+            }
+            input {
+                display: inline-block;
+                width: 70px;
+                height: 25px;
+                line-height: 25px;
+
+                margin-right: 5px;
+                padding: 0 5px;
+                white-space: nowrap;
+
+                font-size: 13px;
+                font-weight: 400;
+                color: #3A3C3E;
+                font-family: Arial,sans-serif;
+            }
+            .checkbox {
+                width: 13px;
+                height: 13px;
+                padding: 0;
+                margin: 0;
+            }           
+        }
+    }
+    .account {
+        overflow: hidden;
+        border-bottom: 1px solid #E8E8E8;
+        P {
+            margin-top: 10px;
+        }
+        .input {
+            padding: 0;
+
+            label {
+                display: inline-block;
+                color: #AC9B9C;
+            }
+            input {
+                display: inline-block;
+                width: 130px;
+                height: 25px;
+                line-height: 25px;
+
+                margin-right: 5px;
+                padding: 0 5px;
+                white-space: nowrap;
+
+                font-size: 13px;
+                font-weight: 400;
+                color: #3A3C3E;
+                font-family: Arial,sans-serif;
+            }
+        }
+    }
+    .action {
+        margin-top: 10px;
+        text-align: center;
+    }
+}
+.conformation {
+    display: none;
+    width: 510px;
+    height: 350px;
+
+    padding: 0 25px;
+    margin-top: -175px;
+    margin-left: -255px;
+
+    h2 {
+        display: inline-block;
+        margin: 25px 20px;
+
+        font-size: 30px;
+        font-weight: 400;
+        line-height: 100%;
+    }
+    .check {
+        width: 100%;
+        padding: 0 0 10px 0;
+
+        border-bottom: 1px solid #E8E8E8;
+        overflow: hidden;
+
+        .data {
+            height: 23px;
+            line-height: 23px;
+            padding: 0 0 40px 0;
+        }       
+        .iterm {
+            display: inline-block;
+            min-width: 80px;
+            
+            cursor: pointer;
+            text-align: right; 
+            font-weight: 400;              
+        }
+        span {
+            font-weight: bold;
+        }
+    }
+    .action {
+        margin-top: 20px;
+        text-align: center;
+    }
+}
+.pickup {
+    display: none;
+    width: 680px;
+    height: 570px;
+
+    margin-top: -280px;
+    margin-left: -340px;
+    padding-top: 20px;
+
+    text-align: center;
+
+    .action {
+        margin-top: 10px;
+        padding-top: 7px;
+        border-top: 1px solid #E8E8E8;   
+
+        button {
+            display: none;
+        }     
+    }
+    .camera {
+        width: 640px;
+        height: 488px;
+
+        -webkit-border-radius: 10px;
+        border-radius: 10px; 
+    }
+    .result {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+
+        width: 640px;
+        height: 488px;
+
+        z-index: 1;
+    }
+    .mask {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+
+        width: 640px;
+        height: 488px;
+
+        z-index: 2;
+    }
+    .counter {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        width: 150px;
+        height: 150px;
+        line-height: 130px;
+        margin-left: -75px;
+        margin-top: -100px;
+
+        font-size: 100px;
+
+        border: 10px solid #000;
+        -webkit-border-radius: 150px;
+        border-radius: 150px; 
+        text-align: center;
+    }
+    .congratulation {
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        h2 {
+            display: inline-block;
+            margin: 25px 50px 50px 50px;
+
+            font-size: 30px;
+            font-weight: 400;
+            line-height: 100%;
+        }
+        img {
+            width: 30%;
+            border: 1px solid #fff;
+            margin-left: 5px;
+        }
+    }
+}
+.tips {
+    width: 250px;
+    min-height: 100px;
+
+    top: 55px;
+    left: 78%;
+
+    h3 {
+        font-size: 16px;
+        text-align: center;
+    }
+    p {
+        display: none;
+        text-indent: 2em;
+        margin: 0 15px 20px 15px;
+    }
+    .open {
+        display: block;
+    }
+}

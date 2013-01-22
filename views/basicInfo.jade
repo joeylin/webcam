@@ -1,0 +1,45 @@
+form(action='/userInfo', method='post', name='basicInfo')
+  h2 Your perfect fit starts here
+  p To help us with the measurement process we need to know some basic information.
+  .info
+    .input.six.columns
+      label(for='age') Age:
+      input#age.text(type='text', value='', name='age')
+      | years
+      .error Please enter your age
+    .input.six.columns
+      label Sex:
+      input#w.checkbox(type='radio', value='Female', name='gender')
+      label.short(for='w') Female
+      input#m.checkbox(type='radio', value='Male', name='gender')
+      label.short(for='m') Male
+      .error Please enter your gender
+    .input.six.columns
+      label(for='height') Heigth:
+      input#height.text(type='text', value='', name='height')
+      | cm
+      .error Please enter your height
+    .input.six.columns
+      label(for='weight') Weight:
+      input#weight.text(type='text', value='', name='weight')
+      | kg
+      .error Please enter your weight
+  .account
+    p
+      | Please, enter your email and create a password to save your personal measurements with WebCam.
+    .input.six.columns
+      label(for='email') Your Email:
+      input#email.text.long(type='text', name='email')
+      .error Please enter your Email
+    .input.six.columns
+      label(for='password') Password:
+      input#password.text.long(type='password', name='password')
+      .error Please enter your password
+    p.terms
+      | All fields are required. By clicking, you are agreeing to the
+      a(href='#') Terms and Conditions
+      | and
+      a(href='#') Privacy Policy
+  .action
+    input.bToConform.button.round(type='submit', value='Continue')
+  

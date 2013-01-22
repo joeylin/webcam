@@ -1,0 +1,312 @@
+!!! 5
+html
+  head
+    meta(http-equiv='content-type', content='text/html; charset=UTF-8')
+    title webcam
+    link(rel='stylesheet', type='text/css', href='css/foundation.min.css')
+    link(rel='stylesheet', type='text/css', href='css/webcam.css')
+    script(src='js/vendor/jquery-1.8.0.min.js')
+    script(src='js/vendor/modernizr-2.6.2.min.js')
+    script(type='text/javascript')
+      window.addEventListener('load', function() {
+      var
+      //DOM element
+      video = document.querySelector('video'),
+      canvas = document.getElementById('result'),
+      ctx = canvas.getContext('2d'),
+      //tag
+      num = 1,
+      isPicked,
+      //cash data
+      imgData = {},
+      formData = null,
+      localMediaStream = null;
+      function onFailSoHard(e) {
+      console.log('Reeeejected!', e);
+      alert('call camera failed!');
+      }
+      function callCam () {
+      navigator.webkitGetUserMedia({video: true}, function(stream) {
+      video.src = window.webkitURL.createObjectURL(stream);
+      localMediaStream = stream;
+      },onFailSoHard);
+      }
+      function closeCam() {
+      localMediaStream.stop();
+      }
+      function snapshot() {
+      // set the canvas to the dimensions of the video
+      if (localMediaStream) {
+      isPicked = true;
+      canvas.width = video.clientWidth;
+      canvas.height = video.clientHeight;
+      ctx.drawImage(video, 0, 0);
+      }
+      // don't think this stuff is necessary and it's throwing an error
+      //document.getElementById("huhu").src = canvas.toDataURL('image/webp');
+      }
+      function getImage(data) {
+      var img = new Image();
+      img.src = data;
+      $(img).appendTo('.collect');
+      }
+      function getFormData() {
+      var sexValue,
+      age = $('#age'),sex = $('.basicInfo form .checkbox'),
+      weight = $('#weight'),height = $('#height'),
+      email = $('#email'), password = $('#password');
+      $.each(sex,function(i) {
+      if (sex[i].checked) {
+      sexValue = sex[i].value;
+      }
+      })
+      formData = {
+      age:      age.val(),
+      sex:      sexValue,
+      weight:   weight.val(),
+      height:   height.val(),
+      email:    email.val(),
+      password: password.val(),
+      };
+      $.post("/userInfo",formData);
+      }
+      function fillFormData() {
+      var $age = $('.age-check'),$sex = $('.sex-check'),
+      $weight = $('.weight-check'),$height = $('.height-check'),
+      $email = $('.email-check'),$password = $('.password-check');
+      if (formData === null) {
+      getFormData();
+      }
+      $age.text(formData.age);
+      $sex.text(formData.sex);
+      $weight.text(formData.weight);
+      $height.text(formData.height);
+      $email.text(formData.email);
+      $password.text(formData.password);
+      }
+      function setCounter() {
+      var timer,
+      num = 5,
+      $counter = $('#counter');
+      function count() {
+      num -=1;
+      $counter.empty().text(num);
+      if (num === 0) {
+      snapshot();
+      clearTimeout(timer);
+      $counter.fadeOut();
+      }
+      }
+      $counter.text(num).css({display:"block"});
+      timer = setInterval(count,1000);
+      }
+      function saveImage(num) {
+      var url = canvas.toDataURL('image/png');
+      imgData["img-"+num] = url;
+      getImage(url);
+      }
+      function clearSnapshot() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      }
+      function upload(data,name) {
+      var b64 = data;
+      $.post('/upload',{data:b64,name:name},function(data) {
+      $('.log').append($('<div>').text(data));
+      });
+      }
+      //here comes jQuery button event
+      $('.wToBasic').on('click',function() {
+      $('.welcome').fadeOut();
+      $('.basicInfo').fadeIn();
+      return false;
+      });
+      $('.bToConform').on('click',function() {
+      $('.basicInfo').fadeOut();
+      getFormData();
+      fillFormData();
+      $('.conformation').fadeIn();
+      return false;
+      });
+      $('.cToBasic').on('click',function() {
+      $('.conformation').fadeOut();
+      $('.basicInfo').fadeIn();
+      });
+      $('.cToPick').on('click',function() {
+      $('.conformation').fadeOut();
+      $('#snapshot').css({display:'inline-block'});
+      //tips
+      $('.tips').css({display: 'block'});
+      $('.tips .tip-1').css({display:'block'});
+      $('.tips').fadeIn();
+      //mask
+      $('#mask').removeClass().addClass('mask-one mask');
+      $('.pickup').fadeIn();
+      setTimeout(callCam,800);
+      });
+      //pickup botton
+      $('#snapshot').on('click',function() {
+      setCounter();
+      if (num == 3) {
+      $('#finish').add('#rePick').fadeIn();
+      $('#snapshot').css({display:'none'});
+      return
+      }
+      $('#snapshot').css({display:'none'});
+      $('#nextStep').add('#rePick').fadeIn();
+      });
+      $('#nextStep').on('click',function() {
+      var str;
+      if (isPicked === true) {
+      saveImage(num);
+      num += 1;
+      clearSnapshot();
+      isPicked = false;
+      //mask
+      $('#mask').removeClass().addClass('mask mask-'+num);
+      //tips
+      str = '.tip-'+num;
+      $('.tips p').css({display:'none'});
+      $(str).fadeIn();
+      console.log(str);
+      console.log($(str));
+      $('#snapshot').fadeIn();
+      $('#nextStep').add('#rePick').css({display:'none'});
+      } else {
+      alert('please finish step ' + num + ' first!');
+      }
+      });
+      $('#rePick').on('click',function(){
+      clearSnapshot();
+      $('#snapshot').fadeIn();
+      $('#nextStep').add('#rePick').css({display:'none'});
+      });
+      $('#finish').on('click',function() {
+      if( isPicked === true) {
+      saveImage(num);
+      closeCam();
+      clearSnapshot();
+      $('#snapshot').add('#rePick').add('#finish').add('.tips').css({display:'none'});
+      $('#upload').fadeIn();
+      $('.congratulation').css({display:'block'}).appendTo('#mask');
+      } else {
+      alert('please finish step 3 first!');
+      }
+      });
+      $('#upload').on('click',function(){
+      $.each(imgData,function(i,v) {
+      upload(v,i);
+      });
+      $('#upload').css({display:'none'});      
+      $('#shop').fadeIn();
+      });
+      });
+  body
+    .container
+      span.logo webcam
+      .login login
+      section.welcome
+        .control
+          h2 Welcome to WebCam measurement service
+          span.wToBasic start
+        .feature
+          ul
+            li Find out exactly how clothes will fit.
+            li Buy gifts for friends and family.
+            li Order tailor made clothing.
+      section.basicInfo
+        form(action='/account/setup', method='post', name='basicInfo')
+          h2 Your perfect fit starts here
+          p To help us with the measurement process we need to know some basic information.
+          .info
+            .input.six.columns
+              label(for='age') Age:
+              input#age.text(type='text', value='', name='age')
+              | years
+              .error Please enter your age
+            .input.six.columns
+              label Sex:
+              input#w.checkbox(type='radio', value='Female', name='gender')
+              label.short(for='w') Female
+              input#m.checkbox(type='radio', value='Male', name='gender')
+              label.short(for='m') Male
+              .error Please enter your gender
+            .input.six.columns
+              label(for='height') Heigth:
+              input#height.text(type='text', value='', name='height')
+              | cm
+              .error Please enter your height
+            .input.six.columns
+              label(for='weight') Weight:
+              input#weight.text(type='text', value='', name='weight')
+              | kg
+              .error Please enter your weight
+          .account
+            p
+              | Please, enter your email and create a password to save your personal measurements with WebCam.
+            .input.six.columns
+              label(for='email') Your Email:
+              input#email.text.long(type='text', name='email')
+              .error Please enter your Email
+            .input.six.columns
+              label(for='password') Password:
+              input#password.text.long(type='password', name='password')
+              .error Please enter your password
+            p.terms
+              | All fields are required. By clicking, you are agreeing to the
+              a(href='#') Terms and Conditions
+              | and
+              a(href='#') Privacy Policy
+          .action
+            button.bToConform.button.round Continue
+      section.conformation
+        h2 You entered the following data
+        .check
+          .data.six.columns
+            span.iterm Age: 
+            span.age-check
+          .data.six.columns
+            span.iterm Sex: 
+            span.sex-check
+          .data.six.columns
+            span.iterm Height: 
+            span.height-check
+          .data.six.columns
+            span.iterm Weight: 
+            span.weight-check
+          .data.six.columns
+            span.iterm Your Email: 
+            span.email-check
+          .data.six.columns
+            span.iterm Password: 
+            span.password-check
+          p.terms
+            | All fields are required. By clicking, you are agreeing to the
+            a(href='#') Terms and Conditions
+            | and
+            a(href='#') Privacy Policy
+        .action
+          button.cToBasic.round.button Back to change my data
+          button.cToPick.round.button Confirm and continue
+      section.pickup
+        video#camera.camera(autoplay='autoplay')
+        canvas#result.result
+        #mask.mask
+        #counter.counter 10
+        .action
+          button#snapshot.round.button Take snapshot
+          button#nextStep.round.button Next
+          button#finish.round.button finish
+          button#rePick.round.button Retry
+          button#upload.round.button upload
+          button#shop.round.button go to shop
+        section.tips
+          h3 Tips
+          p.tip-1
+            | some tips some tips some tips some tips some tips some tips some tips some tips some tips some tips some tips some tips some tips...
+          p.tip-2
+            | some tip two some tip two some tip two some tip two some tip two some tip twosome tip two some tip two some tip two some tip two some tip two some tip two some tip two.....
+          p.tip-3 some tip three some tip three 
+        .inline.congratulation
+          h2 Congratulation!
+          .collect
+          .log
